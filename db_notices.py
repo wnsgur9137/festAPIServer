@@ -8,7 +8,7 @@ def set_notice(title, writer, content):
     conn = db_conn.db_connect()
     cur = conn.cursor()
 
-    insert_query = "insert into users(writer, title, content) values (?, ?, ?)"
+    insert_query = "insert into notices(writer, title, content) values (?, ?, ?)"
     try:
         cur.execute(insert_query, (writer, title, content))
         conn.commit()
@@ -26,7 +26,7 @@ def get_notice(id):
     conn = db_conn.db_connect()
     cur = conn.cursor()
 
-    select_all_query = 'select id, writer, title, content from users where id=?'
+    select_all_query = 'select id, writer, title, content from notices where id=?'
     cur.execute(select_all_query, (id,))
     resultset = cur.fetchall()
 
@@ -43,7 +43,7 @@ def update_notice(id, title, content):
     conn = db_conn.db_connect()
     cur = conn.cursor()
 
-    insert_query = "update users set title=?, content=? where id=?"
+    insert_query = "update notices set title=?, content=? where id=?"
     try:
         cur.execute(insert_query, (title, content, id))
         conn.commit()
@@ -57,7 +57,7 @@ def delete_notice(id):
     conn = db_conn.db_connect()
     cur = conn.cursor()
 
-    insert_query = "delete from users where id=?"
+    insert_query = "delete from notices where id=?"
     try:
         cur.execute(insert_query, (id,))
         conn.commit()

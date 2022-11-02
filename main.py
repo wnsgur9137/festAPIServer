@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 import uvicorn
 
+import db_notices
 import db_users
 
 app = FastAPI()
@@ -12,26 +13,33 @@ async def root():
 
 
 # region users
-@app.get("/getUserInfo/{email}")
+@app.get("/PillInfo/getUserInfo/")
 async def get_user_info(email: str):
     result = db_users.get_user_info(email)
     print(result)
     return result
 
 
-@app.post("/setUserInfo/{email, nickname, updateDate}")
+@app.get("/PillInfo/getNicknameCheck/")
+async def get_nickname_check(nickname: str):
+    result = db_users.get_nickname_check(nickname)
+    print(result)
+    return result
+
+
+@app.post("/PillInfo/setUserInfo/")
 async def set_user_info(email: str, nickname: str, updateDate: str):
     result = db_users.set_user_info(email, nickname, updateDate)
     return result
 
 
-@app.post("/updateUserInfo/{email, nickname, updateDate}")
+@app.post("/PillInfo/updateUserInfo/")
 async def update_user_info(email: str, nickname: str, updateDate: str):
     result = db_users.update_user_info(email, nickname, updateDate)
     return result
 
 
-@app.post("/deleteUserInfo/{email}")
+@app.post("/PillInfo/deleteUserInfo/")
 async def delete_user_info(email: str):
     result = db_users.delete_user_info(email)
     return result
@@ -40,22 +48,23 @@ async def delete_user_info(email: str):
 # endregion
 
 # region notices
-@app.get("/getNotice/{id}")
+@app.get("/PillInfo/getNotice/")
 async def get_notice(id: int):
     pass
 
 
-@app.post("/setNotice/{title, writer, content}")
+@app.post("/PillInfo/setNotice/")
 async def set_notice(title: str, writer: str, content: str):
-    pass
+    print('setNotice: ', title, writer, content)
+    db_notices.set_notice(title, writer, content)
 
 
-@app.post("/updateNotice/{id, title, content}")
+@app.post("/PillInfo/updateNotice/")
 async def update_notice(id: int, title: str, content: str):
     pass
 
 
-@app.post("/deleteNotice/{id}")
+@app.post("/PillInfo/deleteNotice/")
 async def delete_notice(id: int):
     pass
 

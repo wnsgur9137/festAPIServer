@@ -23,6 +23,24 @@ def get_user_info(email):
     return {"email": email, "nickname": nickname, "updateDate": updateDate}
 
 
+def get_nickname_check(nickname):
+    email = ''
+    updateDate = ''
+    return_nickname = ''
+    conn = db_conn.db_connect()
+    cur = conn.cursor()
+
+    select_all_query = 'select email, nickname, updateDate from users where nickname=?'
+    cur.execute(select_all_query, (nickname,))
+    result_set = cur.fetchall()
+    for result_email, result_nickname, result_updateDate in result_set:
+        email = result_email
+        return_nickname = result_nickname
+        updateDate = result_updateDate
+
+    return {"email": email, "nickname": return_nickname, "updateDate": updateDate}
+
+
 def set_user_info(email, nickname, updateDate):
     print(f"email: {email}")
     print(f"nickname: {nickname}")
