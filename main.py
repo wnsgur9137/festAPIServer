@@ -48,25 +48,30 @@ async def delete_user_info(email: str):
 # endregion
 
 # region notices
+@app.get("/PillInfo/getAllNotices/")
+async def get_all_notices():
+    return db_notices.get_all_notices()
+
+
 @app.get("/PillInfo/getNotice/")
 async def get_notice(id: int):
-    pass
+    return db_notices.get_notice(id)
 
 
 @app.post("/PillInfo/setNotice/")
 async def set_notice(title: str, writer: str, content: str):
     print('setNotice: ', title, writer, content)
-    db_notices.set_notice(title, writer, content)
-
+    return db_notices.set_notice(title, writer, content)
+# PillInfo/setNotice/?title=공지사항&writer=Admin&content=공지%5Cn
 
 @app.post("/PillInfo/updateNotice/")
 async def update_notice(id: int, title: str, content: str):
-    pass
+    return db_notices.update_notice(id, title, content)
 
 
 @app.post("/PillInfo/deleteNotice/")
 async def delete_notice(id: int):
-    pass
+    return db_notices.delete_notice(id)
 
 
 # endregion
