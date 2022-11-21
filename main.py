@@ -2,6 +2,7 @@ from fastapi import FastAPI
 import uvicorn
 
 import db_medicineList
+import db_medicineInfoList
 import db_notices
 import db_users
 
@@ -96,7 +97,7 @@ async def get_medicine_list_shape(medicineName: str):
 @app.post("/PillInfo/getMedicineInfo")
 async def get_medicineInfo_list(medicineName: str):
     print(medicineName)
-    return get_medicineInfo_list.get_medicineInfo_list(medicineName)
+    return db_medicineInfoList.get_medicineInfo_list_name(medicineName)
 
 # endregion
 

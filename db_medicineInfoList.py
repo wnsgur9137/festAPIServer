@@ -3,7 +3,7 @@ import sys
 
 import db_conn
 
-def get_medicineInfo_list(medicineName):
+def get_medicineInfo_list_name(medicineName):
     global drugSeq, drugName, entpName, efcyQesitm, useMethodQesitm, atpnWarnQesitm, atpnQesitm, intrcQesitm, seQesitm, depositMethodQesitm, openDe, updateDe, drugImage
     conn = db_conn.db_connect()
     cur = conn.cursor()
@@ -12,6 +12,7 @@ def get_medicineInfo_list(medicineName):
                    "from easyDrugList " \
                    "where drugName=?"
 
+    print(select_query)
     cur.execute(select_query, (medicineName,))
     result_set = cur.fetchall()
 
