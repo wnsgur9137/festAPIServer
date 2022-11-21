@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 import uvicorn
 
+import db_medicineList
 import db_notices
 import db_users
 
@@ -73,6 +74,29 @@ async def update_notice(id: int, title: str, content: str):
 async def delete_notice(id: int):
     return db_notices.delete_notice(id)
 
+
+# endregion
+
+# region medicineList
+
+@app.post("/PillInfo/getMedicineListName")
+async def get_medicine_list_name(medicineName: str):
+    print(medicineName)
+    print(db_medicineList.get_medicine_list_name(medicineName))
+    return db_medicineList.get_medicine_list_name(medicineName)
+
+@app.post("/PillInfo/getMedicineListShape")
+async def get_medicine_list_shape(medicineName: str):
+    return db_medicineList.get_medicine_list_shape(medicineName)
+
+# endregion
+
+# region medicineInfo
+
+@app.post("/PillInfo/getMedicineInfo")
+async def get_medicineInfo_list(medicineName: str):
+    print(medicineName)
+    return get_medicineInfo_list.get_medicineInfo_list(medicineName)
 
 # endregion
 
