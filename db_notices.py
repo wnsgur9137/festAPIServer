@@ -34,7 +34,7 @@ def get_all_notices():
         # print('result_title: ', result_title)
         # print('result_content: ', result_content)
         return_list.append({'id': result_id, 'title': result_title, 'writer': result_writer, 'content': result_content})
-    print('\nreturn_list: ', return_list)
+    # print('\nreturn_list: ', return_list)
     return {'noticeList': return_list}
 
 def get_notice(id):

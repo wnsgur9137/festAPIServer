@@ -12,7 +12,7 @@ def get_medicineInfo_list_name(medicineName):
                    "from easyDrugList " \
                    "where drugName=?"
 
-    print(select_query)
+    # print(select_query)
     cur.execute(select_query, (medicineName,))
     result_set = cur.fetchall()
 

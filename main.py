@@ -18,14 +18,14 @@ async def root():
 @app.get("/PillInfo/getUserInfo/")
 async def get_user_info(email: str):
     result = db_users.get_user_info(email)
-    print(result)
+    # print(result)
     return result
 
 
 @app.get("/PillInfo/getNicknameCheck/")
 async def get_nickname_check(nickname: str):
     result = db_users.get_nickname_check(nickname)
-    print(result)
+    # print(result)
     return result
 
 
@@ -62,7 +62,7 @@ async def get_notice(id: int):
 
 @app.post("/PillInfo/setNotice/")
 async def set_notice(title: str, writer: str, content: str):
-    print('setNotice: ', title, writer, content)
+    # print('setNotice: ', title, writer, content)
     return db_notices.set_notice(title, writer, content)
 # PillInfo/setNotice/?title=공지사항&writer=Admin&content=공지%5Cn
 
@@ -82,13 +82,15 @@ async def delete_notice(id: int):
 
 @app.post("/PillInfo/getMedicineListName")
 async def get_medicine_list_name(medicineName: str):
-    print(medicineName)
-    print(db_medicineList.get_medicine_list_name(medicineName))
+    # print(medicineName)
+    # print(db_medicineList.get_medicine_list_name(medicineName))
     return db_medicineList.get_medicine_list_name(medicineName)
 
 @app.post("/PillInfo/getMedicineListShape")
-async def get_medicine_list_shape(medicineName: str):
-    return db_medicineList.get_medicine_list_shape(medicineName)
+async def get_medicine_list_shape(medicineShape: str, medicineColor: str, medicineLine: str, medicineCode):
+    if medicineCode == "nil":
+        medicineCode = ""
+    return db_medicineList.get_medicine_list_shape(medicineShape, medicineColor, medicineLine, medicineCode)
 
 # endregion
 
@@ -96,7 +98,7 @@ async def get_medicine_list_shape(medicineName: str):
 
 @app.post("/PillInfo/getMedicineInfo")
 async def get_medicineInfo_list(medicineName: str):
-    print(medicineName)
+    # print(medicineName)
     return db_medicineInfoList.get_medicineInfo_list_name(medicineName)
 
 # endregion
