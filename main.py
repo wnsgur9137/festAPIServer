@@ -88,8 +88,6 @@ async def get_medicine_list_name(medicineName: str):
 
 @app.post("/PillInfo/getMedicineListShape")
 async def get_medicine_list_shape(medicineShape: str, medicineColor: str, medicineLine: str, medicineCode):
-    if medicineCode == "nil":
-        medicineCode = ""
     return db_medicineList.get_medicine_list_shape(medicineShape, medicineColor, medicineLine, medicineCode)
 
 # endregion

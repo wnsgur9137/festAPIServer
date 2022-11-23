@@ -15,7 +15,8 @@ def get_medicine_list_name(medicineName):
 
     select_query = "select medicineSeq, medicineName, entpSeq, entpName, chart, medicineImage, printFront, printBack, medicineShape, colorClass1, colorClass2, lineFront, lineBack, lengLong, lengShort, thick, imgRegistTs, classNo, className, etcOtcName, medicinePermitDate, formCodeName, markCodeFrontAnal, markCodeBackAnal, markCodeFrontImg, markCodeBackImg, changeDate, markCodeFront, markCodeBack, medicineEngName, ediCode " \
                    "from medicineList " \
-                   "where medicineName like ? or medicineEngName like ?"
+                   "where medicineName like ? or medicineEngName like ? " \
+                   "limit 30"
 
     # print(select_query)
 
@@ -104,16 +105,30 @@ def get_medicine_list_shape(shape, medicineColor, medicineLine, medicineCode):
 
     select_query = "select medicineSeq, medicineName, entpSeq, entpName, chart, medicineImage, printFront, printBack, medicineShape, colorClass1, colorClass2, lineFront, lineBack, lengLong, lengShort, thick, imgRegistTs, classNo, className, etcOtcName, medicinePermitDate, formCodeName, markCodeFrontAnal, markCodeBackAnal, markCodeFrontImg, markCodeBackImg, changeDate, markCodeFront, markCodeBack, medicineEngName, ediCode " \
                    "from medicineList " \
-                   "where medicineShape like ? and " \
-                   "colorClass1 like ? or colorClass2 like ? and " \
-                   "lineFront like ? or lineBack like ? and " \
-                   "printFront like ? or printBack like ? " \
-                   "Limit 30"
-    # print(select_query)
-    cur.execute(select_query, (("%"+shape+"%"),
+                   "where (medicineShape = ?) and " \
+                   "(colorClass1 like ? or colorClass2 like ?) "
+                   # "lineFront like ? or lineBack like ? and " \
+                   # "printFront like ? or printBack like ? " \
+                   # "Limit 30"
+
+    if medicineLine != '없음':
+        if medicineLine == '실선':
+            medicineLine = "'-'"
+        elif medicineLine == '십자':
+            medicineLine = "'+'"
+        select_query += "and (lineFront = " + medicineLine + " or lineBack = " + medicineLine + ") "
+
+    if medicineCode != 'nil':
+        medicineCode = "'%" + medicineCode + "%'"
+        select_query += "and (printFront like " + medicineCode + " or printBack like " + medicineCode + ") "
+
+    select_query += "Limit 30"
+
+    print(select_query)
+    cur.execute(select_query, ((shape),
                                ("%"+medicineColor+"%"), ("%"+medicineColor+"%"),
-                               ("%"+medicineLine+"%"), ("%"+medicineLine+"%"),
-                               ("%"+medicineCode+"%"), ("%"+medicineCode+"%")))
+                               ))
+
     result_set = cur.fetchall()
 
     for result_medicineSeq, result_medicineName, result_entpSeq, result_entpName, result_chart, result_medicineImage, result_printFront, result_printBack, result_medicineShape, result_colorClass1, result_colorClass2, result_lineFront, result_lineBack, result_lengLong, result_lengShort, result_thick, result_imgRegistTs, result_classNo, result_className, result_etcOtcName, result_medicinePermitDate, result_formCodeName, result_markCodeFrontAnal, result_markCodeBackAnal, result_markCodeFrontImg, result_markCodeBackImg, result_changeDate, result_markCodeFront, result_markCodeBack, result_medicineEngName, result_ediCode in result_set:
